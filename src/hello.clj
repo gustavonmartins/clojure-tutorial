@@ -3,16 +3,24 @@
             [io.pedestal.http.route :as route])
  )
 
+(defn ok [body]
+  {:status 200 :body body}
+  )
+
+(defn greeting-for-nm [nm]  
+      (if (empty? nm)
+           "Hello, world!\n"
+           (str "Hello, " nm "\n"))
+  )
+
 (defn respond-hello [request]
   (let 
     [nm 
       (get-in request [:query-params :name])
     resp 
-      (if (empty? nm)
-           "Hello, world!\n"
-           (str "Hello, " nm "\n"))
+      (greeting-for-nm nm)
      ]
-  {:status 200 :body resp}
+  (ok resp)
     )
   )
 
