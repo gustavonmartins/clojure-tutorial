@@ -6,9 +6,13 @@
 (defn respond-hello [request]
   (let 
     [nm 
-    (get-in request [:query-params :name])
+      (get-in request [:query-params :name])
+    resp 
+      (if (empty? nm)
+           "Hello, world!\n"
+           (str "Hello, " nm "\n"))
      ]
-  {:status 200 :body (str "Hello, " nm "\n")}
+  {:status 200 :body resp}
     )
   )
 
