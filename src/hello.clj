@@ -4,7 +4,12 @@
  )
 
 (defn respond-hello [request]
-  {:status 200 :body "Hello, world!"}
+  (let 
+    [nm 
+    (get-in request [:query-params :name])
+     ]
+  {:status 200 :body (str "Hello, " nm "\n")}
+    )
   )
 
 (def routes
