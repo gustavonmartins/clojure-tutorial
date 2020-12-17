@@ -7,10 +7,16 @@
   {:status 200 :body body}
   )
 
+(defn not-found [] {:status 404 :body "Not found\n"})
+
+
+(def unmentionables #{"YHWH" "Voldemort" "Mxyzptlk" "Rumplestiltskin" "曹操"})
+
 (defn greeting-for-nm [nm]  
-      (if (empty? nm)
-           "Hello, world!\n"
-           (str "Hello, " nm "\n"))
+      (cond 
+        (unmentionables nm) nil
+        (empty? nm) "Hello, world!\n"
+        :else (str "Hello, " nm "\n"))
   )
 
 (defn respond-hello [request]
@@ -20,7 +26,9 @@
     resp 
       (greeting-for-nm nm)
      ]
-  (ok resp)
+  (if resp
+    (ok resp)
+    (not-found))
     )
   )
 
